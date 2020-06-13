@@ -8,11 +8,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "botbuilder-adapter-slack": "^1.0.11",
     "botbuilder-storage-mongodb": "^0.9.5",
     "botkit": "^4.9.0",
     "botkit-plugin-cms": "^1.0.3",
     "dotenv": "^7.0.0",
+    "form-data": "^3.0.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
   }

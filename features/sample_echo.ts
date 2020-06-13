@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  */
 
-import { Botkit, BotWorker } from "botkit";
+import { Botkit } from "botkit";
 
 module.exports = function (controller: Botkit) {
   controller.hears("sample", "message,direct_message", async (bot, message) => {
