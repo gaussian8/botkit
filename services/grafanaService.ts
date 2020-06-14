@@ -1,6 +1,6 @@
 import Axios, { AxiosResponse } from "axios";
 import { BotWorker, BotkitMessage } from "botkit";
-import { ButtonElement } from "../types/blocks";
+import { ButtonElement, StaticSelect, BlockAction, StaticOption } from "../types/blocks";
 const FormData = require("form-data");
 
 export type Dashboard = {
@@ -61,34 +61,29 @@ export async function replyDashBoards(bot: BotWorker, message: BotkitMessage) {
   });
 }
 
-export async function replyPanels(dashboardId: string, bot: BotWorker, message: BotkitMessage) {
+export async function replyPanels(dashboardId: string, dashboardName: string, bot: BotWorker, message: BotkitMessage) {
   let panels = await _getPanels(dashboardId);
-  let elements = [] as ButtonElement[];
+  let elements = [] as StaticSelect[];
+  let panelOptions = [] as StaticOption[];
 
   panels.forEach((panel) => {
-    let buttonValue = {
-      context: "panels",
-      value: {
-        panelId: panel.id,
-        dashboardId: dashboardId,
-      },
-    };
-    elements.push({
-      type: "button",
-      text: {
-        text: panel.title,
-        type: "plain_text",
-      },
-      value: JSON.stringify(buttonValue),
+    let blockAction = new BlockAction("panels", {
+      panelId: panel.id,
+      dashboardId: dashboardId,
     });
+
+    panelOptions.push(new StaticOption(panel.title, JSON.stringify(blockAction)));
   });
+
+  elements.push(new StaticSelect("Select a panel", panelOptions));
+
   await bot.reply(message, {
     blocks: [
       {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: "대시보드 내 패널 목록은 아래와 같습니다.\n조회하실 패널을 선택해주세요.",
+          text: `\`${dashboardName}\` 내 패널 목록은 아래와 같습니다.\n조회하실 패널을 선택해주세요.`,
         },
       },
       {
@@ -103,7 +98,7 @@ export async function replyPanels(dashboardId: string, bot: BotWorker, message: 
 }
 
 export async function uploadImage(channel: string, dashboardId: string, panelId: number, from?: string, to?: string) {
-  from = from === undefined ? "now-1h" : from;
+  from = from === undefined ? "now-3h" : from;
   to = to === undefined ? "now" : to;
   let imgBuffer = (await _fetchImage(dashboardId, panelId, from, to)) as Buffer;
   await _uploadFileToSlack(imgBuffer, channel);
