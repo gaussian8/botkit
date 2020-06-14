@@ -134,10 +134,6 @@ module.exports = function (controller: Botkit) {
     });
   });
 
-  controller.on("block_actions", async (bot, message) => {
-    await bot.reply(message, `Sounds like your choice is ${message.incoming_message.channelData.actions[0].value}`);
-  });
-
   controller.on("slash_command", async (bot: SlackBotWorker, message) => {
     if (message.text === "plain") {
       await bot.reply(message, "This is a plain reply");
