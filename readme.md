@@ -1,13 +1,10 @@
-# Botkit Starter Kit
+# Botkit for Grafana
 
-This is a Botkit starter kit for slack, created with the [Yeoman generator](https://github.com/howdyai/botkit/tree/master/packages/generator-botkit#readme).
+## Availabe commands
 
-To complete the configuration of this bot, make sure to update the included `.env` file with your platform tokens and credentials.
-
-[Botkit Docs](https://botkit.ai/docs/v4)
-
-This bot is powered by [a folder full of modules](https://botkit.ai/docs/v4/core.html#organize-your-bot-code).
-Edit the samples, and add your own in the [features/](features/) folder.
+- `대시보드` : show dashboard list
+  - block conversation starts and you can get panels and rendered panel image from specific dashboard
+  - ![image](./docs/panelImage.png)
 
 ## ngrok usage
 
